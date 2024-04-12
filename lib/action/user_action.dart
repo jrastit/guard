@@ -10,7 +10,7 @@ http.Client client = http.Client();
 
 class UserAction {
   static Future<User?> loadSessionUser() async {
-    var ret = await HttpHandler.postAuth("${getBaseUrl()}/user");
+    var ret = await HttpHandler.postAuth("${getBaseUrl()}/user/user");
     if (ret == null) {
       return null;
     }
