@@ -19,7 +19,7 @@ class UserAction {
 
   static Future<User?> loginExec(login, password) async {
     var ret = await HttpHandler.postAuth("${getBaseUrl()}/user/login", {
-      'login': login,
+      'username': login,
       'password': password,
     });
     if (ret == null) {
@@ -43,7 +43,7 @@ class UserAction {
 
   static Future<User> registerExec(login, password) async {
     var ret = await HttpHandler.putAuth("${getBaseUrl()}/user/register", {
-      'login': login,
+      'username': login,
       'password': password,
     });
     if (ret == null) {

@@ -1,10 +1,14 @@
 class User {
   final int id;
   final String login;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   User({
     required this.id,
     required this.login,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -15,6 +19,8 @@ class User {
           return User(
             id: 0,
             login: jsonUser['login'] ?? '',
+            createdAt: DateTime.now(),
+            updatedAt: DateTime.now(),
           );
         }
       }
@@ -22,15 +28,20 @@ class User {
     return switch (json) {
       {
         'user': {
-          'id': int id,
+          'id': String id,
           'login': String login,
+          'createdAt': String createdAt,
+          'updatedAt': String updatedAt,
         }
       } =>
         User(
-          id: id,
-          login: login,
+            id: int.parse(id),
+            login: login,
+            createdAt: DateTime.parse(createdAt),
+            updatedAt: DateTime.parse(updatedAt),
         ),
       _ => throw FormatException('Failed to load user. $json'),
     };
   }
 }
+
