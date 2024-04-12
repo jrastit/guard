@@ -4,7 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 const baseUrlProd = "https://grietje.fexhu.com/api";
-const baseUrlTest = "https://grietje.fexhu.com/api";
+const baseUrlTest = "http://127.0.0.1:5606/api";
 
 var logger = Logger();
 
