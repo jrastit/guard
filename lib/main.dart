@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Hans & ...',
       // This is the theme of your application.
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.transparent),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Hans & ...'),
@@ -27,12 +27,11 @@ class MyApp extends StatelessWidget {
   }
 }
 
+/* LOGIN PAGE */
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
+  // Home page of your application. It is stateful (defined below).
 
   // This class is the configuration for the state. It holds the values (in this
   // case the title) provided by the parent (in this case the App widget) and
@@ -79,8 +78,8 @@ class _MyHomePageState extends State<MyHomePage> {
             user: _user, setUser: setUser, setAppState: setAppState);
       }
       if (appState == AppState.login) {
-        tabsHeader.add(const Tab(
-          icon: Icon(Icons.person),
+        tabsHeader.add(Tab(
+          icon: ImageIcon(AssetImage(getAsset('HANS.png')),),
         ));
         tabsContent
             .add(LoginSection(setUser: setUser, setAppState: setAppState));
@@ -89,15 +88,30 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // This method is rerun every time setState is called, (like _incrementCounter)
     return DefaultTabController(
-        initialIndex: 0,
-        length: tabsHeader.length,
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-            title: Text(widget.title),
-            bottom: TabBar(tabs: tabsHeader),
+      initialIndex: 0,
+      length: tabsHeader.length,
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Color.fromRGBO(0, 49, 124, 0.5),
+          centerTitle: true,
+          title: Text(widget.title),
+          bottom: TabBar(tabs: tabsHeader),
+          titleTextStyle: const TextStyle(
+            color: Color.fromRGBO(240, 240, 240, 0.9),
+            fontSize: 30.0,
           ),
-          body: TabBarView(children: tabsContent),
-        ));
+        ),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(getAsset("BGHANS.jpg")),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: TabBarView(children: tabsContent),
+        ),
+      )
+    );
   }
 }

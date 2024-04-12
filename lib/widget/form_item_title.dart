@@ -32,6 +32,7 @@ class FormItemTitleWidget extends StatelessWidget {
                   text: title,
                   type: TekTypographyType.bodyMedium,
                   fontWeight: FontWeight.w600,
+                  color: Color.fromRGBO(255, 255, 255, 0.9)
                 ),
                 if (isRequired)
                   const Positioned(

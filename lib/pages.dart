@@ -62,8 +62,6 @@ class _LandingPageState extends State<LandingPage> {
   }
 }
 
-/* LOGIN PAGE */
-
 
 
 /* GPS TRACKING  */
