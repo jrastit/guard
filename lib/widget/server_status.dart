@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:guard/action/test_action.dart';
-import 'package:guard/widget/badge_test.dart';
+import 'package:hans/action/test_action.dart';
+import 'package:hans/widget/badge_test.dart';
 import 'package:tekflat_design/tekflat_design.dart';
 
 class ServerStatus extends StatefulWidget {

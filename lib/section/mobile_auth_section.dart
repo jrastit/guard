@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:guard/service/state_service.dart';
+import 'package:hans/service/state_service.dart';
 import 'package:tekflat_design/tekflat_design.dart';
 
 class MobileAuthSection extends StatefulWidget {

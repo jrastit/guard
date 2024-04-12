@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:guard/action/user_action.dart';
-import 'package:guard/model/user.dart';
-import 'package:guard/service/state_service.dart';
-import 'package:guard/widget/loading_widget.dart';
+import 'package:hans/action/user_action.dart';
+import 'package:hans/model/user.dart';
+import 'package:hans/service/state_service.dart';
+import 'package:hans/widget/loading_widget.dart';
 
 class LoadingSessionSection extends StatefulWidget {
   final Function setUser;

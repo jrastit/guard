@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
-import 'package:guard/service/cookie_handler.dart';
-import 'package:guard/service/state_service.dart';
+import 'package:hans/service/cookie_handler.dart';
+import 'package:hans/service/state_service.dart';
 
 http.Client client = http.Client();
 

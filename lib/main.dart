@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:guard/model/user.dart';
-import 'package:guard/section/login_section.dart';
-import 'package:guard/section/mobile_auth_section.dart';
-import 'package:guard/section/session_loading_section.dart';
-import 'package:guard/service/state_service.dart';
+import 'package:hans/model/user.dart';
+import 'package:hans/section/login_section.dart';
+import 'package:hans/section/mobile_auth_section.dart';
+import 'package:hans/section/session_loading_section.dart';
+import 'package:hans/service/state_service.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,13 +16,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Guard',
+      title: 'Hans',
       // This is the theme of your application.
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Guard Home Page'),
+      home: const MyHomePage(title: 'Hans Home Page'),
     );
   }
 }

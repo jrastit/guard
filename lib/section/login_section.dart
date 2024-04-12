@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:guard/action/user_action.dart';
-import 'package:guard/model/user.dart';
-import 'package:guard/service/state_service.dart';
-import 'package:guard/widget/loading_widget.dart';
-import 'package:guard/widget/form_item_title.dart';
-import 'package:guard/widget/server_status.dart';
+import 'package:hans/action/user_action.dart';
+import 'package:hans/model/user.dart';
+import 'package:hans/service/state_service.dart';
+import 'package:hans/widget/loading_widget.dart';
+import 'package:hans/widget/form_item_title.dart';
+import 'package:hans/widget/server_status.dart';
 import 'package:tekflat_design/tekflat_design.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -60,7 +60,7 @@ class _LoginSection extends State<LoginSection> {
     if (_formKey.currentState!.saveAndValidate()) {
       var login = _formKey.currentState!.value['username'];
       var password = _formKey.currentState!.value['password'];
-      TekToast.info(msg: "Login in progress $login $password");
+      TekToast.info(msg: "Login in progress $login");
       setState(() {
         _loading = true;
       });
