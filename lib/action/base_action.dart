@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:logger/logger.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-const baseUrlProd = "https://hans.fexhu.com/api";
-const baseUrlTest = "http://127.0.0.1:8282/api";
+const baseUrlProd = "https://grietje.fexhu.com/api";
+const baseUrlTest = "https://grietje.fexhu.com/api";
 
 var logger = Logger();
 

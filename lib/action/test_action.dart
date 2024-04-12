@@ -5,7 +5,7 @@ class TestAction {
   static Future<bool> pingExec() async {
     try {
       final response = await http.get(
-        Uri.parse("${getBaseUrl()}/test/ping"),
+        Uri.parse("${getBaseUrl()}/ping"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
