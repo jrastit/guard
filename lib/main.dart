@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:guard/model/user.dart';
+import 'package:guard/section/login_section.dart';
+import 'package:guard/section/mobile_auth_section.dart';
+import 'package:guard/section/session_loading_section.dart';
+import 'package:guard/service/state_service.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,13 +16,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Guard',
       // This is the theme of your application.
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Guard Home Page'),
     );
   }
 }
@@ -41,46 +46,58 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  //Increment count and change state on click
-  void _incrementCounter() {
+  User? _user;
+
+  AppState appState = isMobile ? AppState.biometric : AppState.retrieveSession;
+
+  void setUser(User? user) {
     setState(() {
-      _counter++;
+      _user = user;
+    });
+  }
+
+  void setAppState(AppState state) {
+    setState(() {
+      appState = state;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+
+    List<Widget> tabsHeader = [];
+    List<Widget> tabsContent = [];
+
+    if (appState == AppState.biometric) {
+      tabsHeader.add(const Tab(
+        icon: Icon(Icons.smartphone),
+      ));
+      tabsContent.add(MobileAuthSection(setAppState: setAppState));
+    } else {
+      if (appState == AppState.retrieveSession) {
+        return LoadingSessionSection(
+            user: _user, setUser: setUser, setAppState: setAppState);
+      }
+      if (appState == AppState.login) {
+        tabsHeader.add(const Tab(
+          icon: Icon(Icons.person),
+        ));
+        tabsContent
+            .add(LoginSection(setUser: setUser, setAppState: setAppState));
+      }
+    }
+
     // This method is rerun every time setState is called, (like _incrementCounter)
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-           // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+    return DefaultTabController(
+        initialIndex: 0,
+        length: tabsHeader.length,
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+            title: Text(widget.title),
+            bottom: TabBar(tabs: tabsHeader),
+          ),
+          body: TabBarView(children: tabsContent),
+        ));
   }
 }
