@@ -16,13 +16,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Hans',
+      title: 'Hans & ...',
       // This is the theme of your application.
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Hans Home Page'),
+      home: const MyHomePage(title: 'Hans & ...'),
     );
   }
 }
