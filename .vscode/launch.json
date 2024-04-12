@@ -1,0 +1,24 @@
+{
+    "version": "0.2.0",
+    "configurations": [{
+           "name": "Flutter",
+           "request": "launch",
+           "type": "dart",
+           "args": ["-d", "web-server","--web-port", "8271", "--web-hostname", "127.0.0.1"],
+       },{
+        "name": "Chrome",
+        "request": "launch",
+        "type": "dart",
+        "args": ["-d", "chrome","--web-port", "8271", "--web-hostname", "127.0.0.1"],
+    },{
+        "name": "Android",
+        "request": "launch",
+        "type": "dart",
+        "args": ["-d", "CPH2449"],
+    },{
+        "name": "iOS",
+        "request": "launch",
+        "type": "dart",
+        "args": ["-d", "00008120-001E05D43450C01E"],
+    }]
+}
