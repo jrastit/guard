@@ -112,89 +112,105 @@ class _LoginSection extends State<LoginSection> {
     if (_loading) return const LoadingWidget();
     return SingleChildScrollView(
         child: Center(
-      child: SizedBox(
-        width: 350,
-        child: FormBuilder(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              TekVSpace.mainSpace,
-              const Align(alignment: Alignment.topRight, child: ServerStatus()),
-              TekVSpace.mainSpace,
-              TekTypography(
-                  text: _isLogin ? "Login form" : "Register from",
-                  type: TekTypographyType.titleLarge),
-              TekVSpace.mainSpace,
-              FormItemTitleWidget(
-                title: 'Username',
-                isRequired: true,
-                child: TekInput(
-                  key: const Key('username'),
-                  name: 'username',
-                  controller: _username,
-                  prefixIcon: const Icon(Icons.person),
-                  validator: FormBuilderValidators.required(
-                    errorText: 'Username is required',
-                  ),
-                ),
-              ),
-              TekVSpace.mainSpace,
-              FormItemTitleWidget(
-                title: 'Password',
-                isRequired: true,
-                child: TekInputPassword(
-                  key: const Key('password'),
-                  name: 'password',
-                  controller: _confirmPass,
-                  prefixIcon: const Icon(Icons.lock),
-                  suffixIconShow: Icons.visibility,
-                  suffixIconHide: Icons.visibility_off,
-                  validator: FormBuilderValidators.required(
-                    errorText: 'Password is required',
-                  ),
-                ),
-              ),
-              if (!_isLogin)
+        child: SizedBox(
+          width: 350,
+          child: FormBuilder(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                TekVSpace.mainSpace,
+                const Align(alignment: Alignment.topRight, child: ServerStatus()),
+                TekVSpace.mainSpace,
+                TekTypography(
+                    text: _isLogin ? "Login form" : "Register from",
+                    type: TekTypographyType.titleLarge),
+                TekVSpace.mainSpace,
                 FormItemTitleWidget(
-                  title: 'Retype Password',
+                  title: 'Username',
                   isRequired: true,
-                  child: TekInputPassword(
-                    key: const Key('password2'),
-                    name: 'password2',
-                    controller: _confirmPass2,
-                    prefixIcon: const Icon(Icons.lock),
-                    suffixIconShow: Icons.visibility,
-                    suffixIconHide: Icons.visibility_off,
-                    validator: FormBuilderValidators.equal(
-                      _confirmPass.value.text,
-                      errorText:
-                          'Password must match with ${_confirmPass.value.text}',
+                  child: TekInput(
+                    key: const Key('username'),
+                    name: 'username',
+                    controller: _username,
+                    prefixIcon: const Icon(Icons.person),
+                    cursorColor: const Color.fromRGBO(255, 255, 255, 0.9),
+                    validator: FormBuilderValidators.required(
+                      errorText: 'Username is required',
+                    ),
+                    textStyle: const TextStyle(
+                      color: Color.fromRGBO(255, 255, 255, 0.9),
                     ),
                   ),
                 ),
-              TekVSpace.p18,
-              TekButton(
-                key: _isLogin
-                    ? const Key('loginButton')
-                    : const Key('registerButton'),
-                text: _isLogin ? 'Login' : 'Register',
-                width: double.infinity,
-                type: TekButtonType.primary,
-                onPressed: _isLogin ? _submitLogin : _submitRegister,
-              ),
-              TekVSpace.p18,
-              
-                TekButton(
-                  text: _isLogin ? 'Register instead' : 'Login instead',
-                  width: double.infinity,
-                  type: TekButtonType.outline,
-                  onPressed: _switch,
+                TekVSpace.mainSpace,
+                FormItemTitleWidget(
+                  title: 'Password',
+                  isRequired: true,
+                  child: TekInputPassword(
+                    key: const Key('password'),
+                    name: 'password',
+                    controller: _confirmPass,
+                    prefixIcon: const Icon(Icons.lock),
+                    suffixIconShow: Icons.visibility,
+                    suffixIconHide: Icons.visibility_off,
+                    cursorColor: Color.fromRGBO(255, 255, 255, 0.9),
+                    validator: FormBuilderValidators.required(
+                      errorText: 'Password is required',
+                    ),
+                    textStyle: const TextStyle(
+                      color: Color.fromRGBO(255, 255, 255, 0.9),
+                    ),
+                    iconPasswordColor: Color.fromRGBO(255, 255, 255, 0.8),
+                  ),
                 ),
-              TekVSpace.p18,
-            ],
+                if (!_isLogin)
+                  FormItemTitleWidget(
+                    title: 'Retype Password',
+                    isRequired: true,
+                    child: TekInputPassword(
+                      key: const Key('password2'),
+                      name: 'password2',
+                      controller: _confirmPass2,
+                      prefixIcon: const Icon(Icons.lock),
+                      suffixIconShow: Icons.visibility,
+                      suffixIconHide: Icons.visibility_off,
+                      cursorColor: const Color.fromRGBO(255, 255, 255, 0.9),
+                      validator: FormBuilderValidators.equal(
+                        _confirmPass.value.text,
+                        errorText:
+                            'Password must match with ${_confirmPass.value.text}',
+                      ),
+                      textStyle: const TextStyle(
+                        color: Color.fromRGBO(255, 255, 255, 0.9),
+                      ),
+                      iconPasswordColor: Color.fromRGBO(255, 255, 255, 0.8),
+                    ),
+                  ),
+                TekVSpace.p18,
+                TekButton(
+                  key: _isLogin
+                      ? const Key('loginButton')
+                      : const Key('registerButton'),
+                  text: _isLogin ? 'Login' : 'Register',
+                  width: double.infinity,
+                  type: TekButtonType.primary,
+                  onPressed: _isLogin ? _submitLogin : _submitRegister,
+                ),
+                TekVSpace.p18,
+                
+                  TekButton(
+                    text: _isLogin ? 'Register instead' : 'Login instead',
+                    borderColor: const Color.fromRGBO(240, 240, 240, 0.9),
+                    width: double.infinity,
+                    type: TekButtonType.themeGhost,
+                    onPressed: _switch,
+                  ),
+                TekVSpace.p18,
+              ],
+            ),
           ),
         ),
-      ),
-    ));
+      )
+    );
   }
 }
