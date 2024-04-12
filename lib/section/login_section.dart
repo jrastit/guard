@@ -121,9 +121,13 @@ class _LoginSection extends State<LoginSection> {
                 TekVSpace.mainSpace,
                 const Align(alignment: Alignment.topRight, child: ServerStatus()),
                 TekVSpace.mainSpace,
+                TekVSpace.p32,
+                TekVSpace.p32,
                 TekTypography(
                     text: _isLogin ? "Login form" : "Register from",
-                    type: TekTypographyType.titleLarge),
+                    type: TekTypographyType.titleLarge,
+                    color: const Color.fromRGBO(255, 255, 255, 0.9),
+                  ),
                 TekVSpace.mainSpace,
                 FormItemTitleWidget(
                   title: 'Username',
