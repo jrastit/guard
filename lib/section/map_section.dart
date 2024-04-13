@@ -272,14 +272,14 @@ class _MapSection extends State<MapSection> {
         //Sharebutton
         TekVSpace.p18,
         TekButton( //Share Location of map screenshot
-          key: const Key('shareButton'),
+          key: const Key('shareLocButton'),
           text: 'Share Location',
           width: TekResponsiveConfig().currentWidth/2,
           type: TekButtonType.primary,
           onPressed: _openPopUpShareLoc,
         ),
         TekButton( //Share mobile picture/camera picture
-          key: const Key('shareButton'),
+          key: const Key('sharePicButton'),
           text: 'Share Picture',
           width: TekResponsiveConfig().currentWidth/2,
           type: TekButtonType.primary,
