@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hans/model/user.dart';
+import 'package:hans/model/wallet.dart';
 import 'package:hans/section/login_section.dart';
 import 'package:hans/section/mobile_auth_section.dart';
 import 'package:hans/section/session_loading_section.dart';
+import 'package:hans/section/setting_section.dart';
 import 'package:hans/service/state_service.dart';
 
 void main() {
@@ -46,12 +48,19 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   User? _user;
+  List<WalletMeta>? _wallets;
 
   AppState appState = isMobile ? AppState.biometric : AppState.retrieveSession;
 
   void setUser(User? user) {
     setState(() {
       _user = user;
+    });
+  }
+
+  void setWallets(List<WalletMeta> wallets) {
+    setState(() {
+      _wallets = wallets;
     });
   }
 
@@ -84,6 +93,16 @@ class _MyHomePageState extends State<MyHomePage> {
         tabsContent
             .add(LoginSection(setUser: setUser, setAppState: setAppState));
       }
+      tabsHeader.add(const Tab(
+        icon: Icon(Icons.settings),
+      ));
+      tabsContent.add(SettingSection(
+        user: _user,
+        setUser: setUser,
+        wallets: _wallets,
+        setWallets: setWallets,
+        setAppState: setAppState,
+      ));
     }
 
     // This method is rerun every time setState is called, (like _incrementCounter)
