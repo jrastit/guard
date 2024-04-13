@@ -119,7 +119,57 @@ class _MapSection extends State<MapSection> {
     });
   }
 
-  void _openPopUpShare(){
+  void _openPopUpShareLoc(){
+    showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          alignment: Alignment.center,
+          scrollable: false,
+          title: const Text('Share'),
+          content: SingleChildScrollView(
+            child: Column(
+              //shrinkWrap: true,
+              children: [
+                Container(
+                  width: 200,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: ExactAssetImage(getAsset("HANS.png")),
+                      fit: BoxFit.cover
+                      ),
+                    )
+                  ),
+                ],
+              ),
+            ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Copy Link'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Send them to your email maybe?
+                //var email = emailController.text;
+                //var message = messageController.text;
+                Navigator.pop(context);
+              },
+              child: const Text('Send'),
+            ),
+            TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _openPopUpSharePic(){
     showDialog(
       barrierDismissible: true,
       context: context,
@@ -221,12 +271,19 @@ class _MapSection extends State<MapSection> {
         ),
         //Sharebutton
         TekVSpace.p18,
-        TekButton(
+        TekButton( //Share Location of map screenshot
           key: const Key('shareButton'),
           text: 'Share Location',
-          width: double.infinity,
+          width: TekResponsiveConfig().currentWidth/2,
           type: TekButtonType.primary,
-          onPressed: _openPopUpShare,
+          onPressed: _openPopUpShareLoc,
+        ),
+        TekButton( //Share mobile picture/camera picture
+          key: const Key('shareButton'),
+          text: 'Share Picture',
+          width: TekResponsiveConfig().currentWidth/2,
+          type: TekButtonType.primary,
+          onPressed: _openPopUpSharePic,
         ),
       ]
     );
