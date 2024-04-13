@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hans/model/user.dart';
 import 'package:hans/model/wallet.dart';
 import 'package:hans/section/login_section.dart';
+import 'package:hans/section/map_section.dart';
 import 'package:hans/section/mobile_auth_section.dart';
 import 'package:hans/section/session_loading_section.dart';
 import 'package:hans/section/setting_section.dart';
@@ -103,6 +104,10 @@ class _MyHomePageState extends State<MyHomePage> {
         setWallets: setWallets,
         setAppState: setAppState,
       ));
+      tabsHeader.add(const Tab(
+        icon: Icon(Icons.map),
+      ));
+      tabsContent.add(const MapSection());
     }
 
     // This method is rerun every time setState is called, (like _incrementCounter)
@@ -110,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
       initialIndex: 0,
       length: tabsHeader.length,
       child: Scaffold(
-        extendBodyBehindAppBar: true,
+        //extendBodyBehindAppBar: true,
         appBar: AppBar(
           backgroundColor: const Color.fromRGBO(0, 49, 124, 0.5),
           centerTitle: true,
