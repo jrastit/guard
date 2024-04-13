@@ -115,15 +115,17 @@ class _MyHomePageState extends State<MyHomePage> {
       initialIndex: 0,
       length: tabsHeader.length,
       child: Scaffold(
-        //extendBodyBehindAppBar: true,
+        extendBodyBehindAppBar: true,
         appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(0, 49, 124, 0.5),
+          backgroundColor: const Color.fromRGBO(0, 49, 124, 0.6),
           centerTitle: true,
           title: Text(widget.title),
           bottom: TabBar(tabs: tabsHeader),
           titleTextStyle: const TextStyle(
-            color: Color.fromRGBO(240, 240, 240, 0.9),
+            color: Color.fromRGBO(255, 235, 245, 0.9),
+            fontWeight: FontWeight.bold,
             fontSize: 30.0,
+            fontFamily: 'Courier',
           ),
         ),
         body: Container(
