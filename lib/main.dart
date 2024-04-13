@@ -6,6 +6,7 @@ import 'package:hans/section/mobile_auth_section.dart';
 import 'package:hans/section/session_loading_section.dart';
 import 'package:hans/section/setting_section.dart';
 import 'package:hans/service/state_service.dart';
+//import 'package:flutter'
 
 void main() {
   runApp(const MyApp());
@@ -34,7 +35,6 @@ class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
   // Home page of your application. It is stateful (defined below).
-
   // This class is the configuration for the state. It holds the values (in this
   // case the title) provided by the parent (in this case the App widget) and
   // used by the build method of the State. Fields in a Widget subclass are
@@ -112,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(0, 49, 124, 0.5),
+          backgroundColor: const Color.fromRGBO(0, 49, 124, 0.5),
           centerTitle: true,
           title: Text(widget.title),
           bottom: TabBar(tabs: tabsHeader),
