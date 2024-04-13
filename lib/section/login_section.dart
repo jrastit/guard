@@ -184,10 +184,12 @@ class _LoginSection extends State<LoginSection> {
                         errorText:
                             'Password must match with ${_confirmPass.value.text}',
                       ),
+
                       // textStyle: const TextStyle(
                       //   color: Color.fromRGBO(255, 255, 255, 0.9),
                       // ),
-                      //iconPasswordColor: Color.fromRGBO(255, 255, 255, 0.8),
+                      // iconPasswordColor: Color.fromRGBO(255, 255, 255, 0.9),
+
                     ),
                   ),
                 TekVSpace.p18,

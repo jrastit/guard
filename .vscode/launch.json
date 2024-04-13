@@ -16,6 +16,11 @@
         "type": "dart",
         "args": ["-d", "CPH2449"],
     },{
+        "name": "Android2",
+        "request": "launch",
+        "type": "dart",
+        "args": ["-d", "emulator-5554"],
+    },{
         "name": "iOS",
         "request": "launch",
         "type": "dart",
