@@ -133,8 +133,8 @@ class _MapSection extends State<MapSection> {
               //shrinkWrap: true,
               children: [
                 Container(
-                  width: 200,
-                  height: 200,
+                  width: 300,
+                  height: 400,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: ExactAssetImage(getAsset("HANS.png")),
@@ -183,8 +183,8 @@ class _MapSection extends State<MapSection> {
               //shrinkWrap: true,
               children: [
                 Container(
-                  width: 200,
-                  height: 200,
+                  width: 300,
+                  height: 400,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: ExactAssetImage(getAsset("HANS.png")),

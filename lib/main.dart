@@ -95,8 +95,8 @@ class _MyHomePageState extends State<MyHomePage> {
             user: _user, setUser: setUser, setAppState: setAppState);
       }
       if (appState == AppState.login) {
-        tabsHeader.add(Tab(
-          icon: ImageIcon(AssetImage(getAsset('HANS.png')),),
+        tabsHeader.add(const Tab(
+          icon: Icon(Icons.person),//ImageIcon(AssetImage(getAsset('HANS.png')),),
         ));
         tabsContent
             .add(LoginSection(setUser: setUser, setAppState: setAppState));
