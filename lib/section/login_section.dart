@@ -126,7 +126,7 @@ class _LoginSection extends State<LoginSection> {
                 TekTypography(
                     text: _isLogin ? "Login form" : "Register from",
                     type: TekTypographyType.titleLarge,
-                    color: const Color.fromRGBO(255, 255, 255, 0.9),
+                    //color: const Color.fromRGBO(255, 255, 255, 0.9),
                   ),
                 TekVSpace.mainSpace,
                 FormItemTitleWidget(
@@ -141,9 +141,9 @@ class _LoginSection extends State<LoginSection> {
                     validator: FormBuilderValidators.required(
                       errorText: 'Username is required',
                     ),
-                    textStyle: const TextStyle(
-                      color: Color.fromRGBO(255, 255, 255, 0.9),
-                    ),
+                    // textStyle: const TextStyle(
+                    //   color: Color.fromRGBO(255, 255, 255, 0.9),
+                    // ),
                   ),
                 ),
                 TekVSpace.mainSpace,
@@ -157,14 +157,14 @@ class _LoginSection extends State<LoginSection> {
                     prefixIcon: const Icon(Icons.lock),
                     suffixIconShow: Icons.visibility,
                     suffixIconHide: Icons.visibility_off,
-                    cursorColor: Color.fromRGBO(255, 255, 255, 0.9),
+                    //cursorColor: Color.fromRGBO(255, 255, 255, 0.9),
                     validator: FormBuilderValidators.required(
                       errorText: 'Password is required',
                     ),
-                    textStyle: const TextStyle(
-                      color: Color.fromRGBO(255, 255, 255, 0.9),
-                    ),
-                    iconPasswordColor: Color.fromRGBO(255, 255, 255, 0.8),
+                    // textStyle: const TextStyle(
+                    //   color: Color.fromRGBO(255, 255, 255, 0.9),
+                    // ),
+                    //iconPasswordColor: Color.fromRGBO(255, 255, 255, 0.8),
                   ),
                 ),
                 if (!_isLogin)
@@ -178,16 +178,16 @@ class _LoginSection extends State<LoginSection> {
                       prefixIcon: const Icon(Icons.lock),
                       suffixIconShow: Icons.visibility,
                       suffixIconHide: Icons.visibility_off,
-                      cursorColor: const Color.fromRGBO(255, 255, 255, 0.9),
+                      // cursorColor: const Color.fromRGBO(255, 255, 255, 0.9),
                       validator: FormBuilderValidators.equal(
                         _confirmPass.value.text,
                         errorText:
                             'Password must match with ${_confirmPass.value.text}',
                       ),
-                      textStyle: const TextStyle(
-                        color: Color.fromRGBO(255, 255, 255, 0.9),
-                      ),
-                      iconPasswordColor: Color.fromRGBO(255, 255, 255, 0.8),
+                      // textStyle: const TextStyle(
+                      //   color: Color.fromRGBO(255, 255, 255, 0.9),
+                      // ),
+                      //iconPasswordColor: Color.fromRGBO(255, 255, 255, 0.8),
                     ),
                   ),
                 TekVSpace.p18,
@@ -204,7 +204,7 @@ class _LoginSection extends State<LoginSection> {
                 
                   TekButton(
                     text: _isLogin ? 'Register instead' : 'Login instead',
-                    borderColor: const Color.fromRGBO(240, 240, 240, 0.9),
+                    // borderColor: const Color.fromRGBO(240, 240, 240, 0.9),
                     width: double.infinity,
                     type: TekButtonType.themeGhost,
                     onPressed: _switch,

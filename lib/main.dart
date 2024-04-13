@@ -110,32 +110,45 @@ class _MyHomePageState extends State<MyHomePage> {
       tabsContent.add(const MapSection());
     }
 
-    // This method is rerun every time setState is called, (like _incrementCounter)
     return DefaultTabController(
-      initialIndex: 0,
-      length: tabsHeader.length,
-      child: Scaffold(
-        //extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(0, 49, 124, 0.5),
-          centerTitle: true,
-          title: Text(widget.title),
-          bottom: TabBar(tabs: tabsHeader),
-          titleTextStyle: const TextStyle(
-            color: Color.fromRGBO(240, 240, 240, 0.9),
-            fontSize: 30.0,
+        initialIndex: 0,
+        length: tabsHeader.length,
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+            title: Text(widget.title),
+            bottom: TabBar(tabs: tabsHeader),
           ),
-        ),
-        body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(getAsset("BGHANS.jpg")),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: TabBarView(children: tabsContent),
-        ),
-      )
-    );
+          body: TabBarView(children: tabsContent),
+        ));
+
+    
+    // This method is rerun every time setState is called, (like _incrementCounter)
+    // return DefaultTabController(
+    //   initialIndex: 0,
+    //   length: tabsHeader.length,
+    //   child: Scaffold(
+    //     //extendBodyBehindAppBar: true,
+    //     appBar: AppBar(
+    //       backgroundColor: const Color.fromRGBO(0, 49, 124, 0.5),
+    //       centerTitle: true,
+    //       title: Text(widget.title),
+    //       bottom: TabBar(tabs: tabsHeader),
+    //       titleTextStyle: const TextStyle(
+    //         color: Color.fromRGBO(240, 240, 240, 0.9),
+    //         fontSize: 30.0,
+    //       ),
+    //     ),
+    //     body: Container(
+    //       decoration: BoxDecoration(
+    //         image: DecorationImage(
+    //           image: AssetImage(getAsset("BGHANS.jpg")),
+    //           fit: BoxFit.cover,
+    //         ),
+    //       ),
+    //       child: TabBarView(children: tabsContent),
+    //     ),
+    //   )
+    // );
   }
 }
