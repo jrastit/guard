@@ -105,6 +105,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.4.2+1"
+  eip1559:
+    dependency: transitive
+    description:
+      name: eip1559
+      sha256: c2b81ac85f3e0e71aaf558201dd9a4600f051ece7ebacd0c5d70065c9b458004
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.2"
+  eip55:
+    dependency: transitive
+    description:
+      name: eip55
+      sha256: "213a9b86add87a5216328e8494b0ab836e401210c4d55eb5e521bd39e39169e1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   equatable:
     dependency: transitive
     description:
@@ -214,12 +230,12 @@ packages:
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
-      name: flutter_osm_interface
-      sha256: f5ec50f7a5fee9c6c1f3622b1bf9285b451349b2ac30f5dacddd32b4608a2840
+      name: flutter_plugin_android_lifecycle
+      sha256: "8cf40eebf5dec866a6d1956ad7b4f7016e6c0cc69847ab946833b7d43743809f"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
-  flutter_osm_plugin:
+    version: "2.0.19"
+  flutter_secure_storage:
     dependency: "direct main"
     description:
       name: flutter_secure_storage
@@ -269,6 +285,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.0"
+  hex:
+    dependency: "direct main"
+    description:
+      name: hex
+      sha256: "4e7cd54e4b59ba026432a6be2dd9d96e4c5205725194997193bf871703b82c4a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   http:
     dependency: "direct main"
     description:
@@ -301,6 +325,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.1"
+  json_rpc_2:
+    dependency: transitive
+    description:
+      name: json_rpc_2
+      sha256: "5e469bffa23899edacb7b22787780068d650b106a21c76db3c49218ab7ca447e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.2"
   leak_tracker:
     dependency: transitive
     description:
@@ -449,10 +481,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_android
-      sha256: "51f0d2c554cfbc9d6a312ab35152fc77e2f0b758ce9f1a444a3a1e5b8f3c6b7f"
+      sha256: a248d8146ee5983446bf03ed5ea8f6533129a12b11f12057ad1b4a67a2b3b41d
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.3"
+    version: "2.2.4"
   path_provider_foundation:
     dependency: transitive
     description:
@@ -617,10 +649,10 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences_android
-      sha256: "8568a389334b6e83415b6aae55378e158fbc2314e074983362d20c562780fb06"
+      sha256: "1ee8bf911094a1b592de7ab29add6f826a7331fb854273d55918693d5364a1f2"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.1"
+    version: "2.2.2"
   shared_preferences_foundation:
     dependency: transitive
     description:
