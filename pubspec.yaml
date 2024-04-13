@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_osm_plugin: ^1.0.0-rc
+  flutter_osm_plugin: ^1.0.0-rc.1
   flutter_secure_storage: ^9.0.0
 
   # The following adds the Cupertino Icons font to your application.
@@ -46,6 +46,7 @@ dependencies:
   shared_preferences: ^2.2.3
   hex: ^0.2.0
   intl: ^0.18.1
+  h3_flutter: ^0.6.6
 
 dev_dependencies:
   flutter_test:

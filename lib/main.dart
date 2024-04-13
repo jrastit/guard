@@ -7,6 +7,7 @@ import 'package:hans/section/mobile_auth_section.dart';
 import 'package:hans/section/session_loading_section.dart';
 import 'package:hans/section/setting_section.dart';
 import 'package:hans/service/state_service.dart';
+import 'package:tekflat_design/tekflat_design.dart';
 //import 'package:flutter'
 
 void main() {
@@ -22,12 +23,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Hans & ...',
       // This is the theme of your application.
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.transparent),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Hans & ...'),
-    );
+      theme: TekThemes.light,
+      home: TekResponsive.appResBuilder(
+          const MyHomePage(title: 'Hans & ...'),
+        ));
   }
 }
 
