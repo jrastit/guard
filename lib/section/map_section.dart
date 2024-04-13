@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:hans/service/h3.dart';
+import 'package:hans/service/state_service.dart';
 import 'package:intl/intl.dart';
 import 'package:tekflat_design/tekflat_design.dart';
 
@@ -123,8 +124,6 @@ class _MapSection extends State<MapSection> {
       barrierDismissible: true,
       context: context,
       builder: (BuildContext context) {
-        var emailController = TextEditingController();
-        var messageController = TextEditingController();
         return AlertDialog(
           alignment: Alignment.center,
           scrollable: false,
@@ -133,13 +132,15 @@ class _MapSection extends State<MapSection> {
             child: Column(
               //shrinkWrap: true,
               children: [
-                TextFormField(
-                  controller: emailController,
-                  decoration: const InputDecoration(hintText: 'Social Network 1'),
-                  ),
-                TextFormField(
-                  controller: messageController,
-                  decoration: const InputDecoration(hintText: 'Social Network 2'),
+                Container(
+                  width: 200,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: ExactAssetImage(getAsset("HANS.png")),
+                      fit: BoxFit.cover
+                      ),
+                    )
                   ),
                 ],
               ),
@@ -152,11 +153,11 @@ class _MapSection extends State<MapSection> {
             TextButton(
               onPressed: () {
                 // Send them to your email maybe?
-                var email = emailController.text;
-                var message = messageController.text;
+                //var email = emailController.text;
+                //var message = messageController.text;
                 Navigator.pop(context);
               },
-              child: Text('Send'),
+              child: const Text('Send'),
             ),
             TextButton(
                 onPressed: () => Navigator.pop(context),
@@ -222,7 +223,7 @@ class _MapSection extends State<MapSection> {
         TekVSpace.p18,
         TekButton(
           key: const Key('shareButton'),
-          text: 'Share',
+          text: 'Share Location',
           width: double.infinity,
           type: TekButtonType.primary,
           onPressed: _openPopUpShare,

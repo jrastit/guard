@@ -145,7 +145,8 @@ class _MyHomePageState extends State<MyHomePage> {
             bottom: TabBar(tabs: tabsHeader),
           ),
           body: TabBarView(children: tabsContent),
-        ));
+        )
+      );
 
     
     // This method is rerun every time setState is called, (like _incrementCounter)
