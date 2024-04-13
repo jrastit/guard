@@ -2,7 +2,7 @@ import 'package:hans/model/network_web3.dart';
 import 'package:web3dart/web3dart.dart';
 
 enum WalletType {
-  dfns,
+  custodial,
   app,
   metamask,
 }
@@ -16,25 +16,27 @@ class WalletMeta {
 
   String? walletId;
 
-  String time;
-  String lastTime;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   WalletMeta(
       {required this.address,
       required this.type,
       this.walletId,
       this.id = 0,
-      this.lastTime = '',
-      this.time = ''});
+      this.createdAt,
+      this.updatedAt
+      }
+      );
 
   factory WalletMeta.fromJson(Map<String, dynamic> json) {
     return WalletMeta(
-      id: json['id'] ?? 0,
+      id: int.parse(json['id'] ?? '0'),
       address: json['address'] ?? '',
-      type: WalletType.values[json['type'] ?? 0],
+      type: WalletType.values[json['type'] ?? WalletType.custodial],
       walletId: json['walletId'],
-      time: json['time'] ?? '',
-      lastTime: json['lastTime'] ?? '',
+      createdAt: DateTime.parse(json['time'] ?? ''),
+      updatedAt: DateTime.parse(json['lastTime'] ?? ''),
     );
   }
 

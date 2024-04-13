@@ -6,6 +6,8 @@ import 'package:hans/section/map_section.dart';
 import 'package:hans/section/mobile_auth_section.dart';
 import 'package:hans/section/session_loading_section.dart';
 import 'package:hans/section/setting_section.dart';
+import 'package:hans/section/wallet_loading_section.dart';
+import 'package:hans/section/wallet_section.dart';
 import 'package:hans/service/state_service.dart';
 import 'package:tekflat_design/tekflat_design.dart';
 //import 'package:flutter'
@@ -49,7 +51,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   User? _user;
   List<WalletMeta>? _wallets;
-
+  String? _address;
   AppState appState = isMobile ? AppState.biometric : AppState.retrieveSession;
 
   void setUser(User? user) {
@@ -67,6 +69,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void setAppState(AppState state) {
     setState(() {
       appState = state;
+    });
+  }
+
+  void setAddress(String address) {
+    setState(() {
+      _address = address;
     });
   }
 
@@ -92,6 +100,24 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
         tabsContent
             .add(LoginSection(setUser: setUser, setAppState: setAppState));
+      }
+      if (appState == AppState.retrieveWallet) {
+        return LoadingWalletSection(
+            wallets: _wallets,
+            setWallets: setWallets,
+            setAppState: setAppState);
+      }
+
+      if (appState == AppState.wallet) {
+        tabsHeader.add(const Tab(
+          icon: Icon(Icons.account_balance_wallet),
+        ));
+        tabsContent.add(WalletSection(
+          address: _address,
+          wallets: _wallets ?? [],
+          setAddress: setAddress,
+          setAppState: setAppState,
+        ));
       }
       tabsHeader.add(const Tab(
         icon: Icon(Icons.settings),
