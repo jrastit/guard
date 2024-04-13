@@ -122,6 +122,7 @@ class _MapSection extends State<MapSection> {
 
   void _openPopUpShare(){
     showDialog(
+      barrierDismissible: true,
       context: context,
       builder: (BuildContext context) {
         var emailController = TextEditingController();
