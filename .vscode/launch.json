@@ -21,6 +21,11 @@
         "type": "dart",
         "args": ["-d", "emulator-5554"],
     },{
+        "name": "Android3",
+        "request": "launch",
+        "type": "dart",
+        "args": ["-d", "emulator-5556"],
+    },{
         "name": "iOS",
         "request": "launch",
         "type": "dart",
