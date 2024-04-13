@@ -1,13 +1,11 @@
 import 'dart:async';
-import 'dart:html';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:hans/service/h3.dart';
 import 'package:intl/intl.dart';
 import 'package:tekflat_design/tekflat_design.dart';
-import 'package:share_plus/share_plus.dart';
+
 import 'dart:developer' as developer;
 
 final dateFormat = DateFormat('yyyy-MM-dd hh:mm:ss');

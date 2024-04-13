@@ -33,10 +33,10 @@ class WalletMeta {
     return WalletMeta(
       id: int.parse(json['id'] ?? '0'),
       address: json['address'] ?? '',
-      type: WalletType.values[json['type'] ?? WalletType.custodial],
+      type: WalletType.custodial,
       walletId: json['walletId'],
-      createdAt: DateTime.parse(json['time'] ?? ''),
-      updatedAt: DateTime.parse(json['lastTime'] ?? ''),
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']),
     );
   }
 

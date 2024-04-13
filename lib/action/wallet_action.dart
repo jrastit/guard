@@ -23,7 +23,7 @@ class WalletAction {
       return [];
     }
     List<WalletMeta> wallets = [];
-    List<dynamic> walletJson = ret['wallet_list'] as List<dynamic>;
+    List<dynamic> walletJson = ret['wallets'] as List<dynamic>;
     for (var item in walletJson) {
       WalletMeta wallet = WalletMeta.fromJson(item);
       wallets.add(wallet);

@@ -80,8 +80,8 @@ class _WalletSectionState extends State<WalletSection> {
               ),
               if (walletCustodial != null)
                 TekButton(
-                  key: const Key('DFNSaddress'),
-                  text: 'Use DFNS address',
+                  key: const Key('Custodialaddress'),
+                  text: 'Use Custodial address',
                   width: double.infinity,
                   type: TekButtonType.primary,
                   onPressed: () {
@@ -90,8 +90,8 @@ class _WalletSectionState extends State<WalletSection> {
                 ),
               if (walletCustodial == null)
                 TekButton(
-                  key: const Key('DFNSaddress'),
-                  text: 'Get a DFNS secure wallet',
+                  key: const Key('Custodialaddress'),
+                  text: 'Get a Custodial secure wallet',
                   width: double.infinity,
                   type: TekButtonType.primary,
                   onPressed: _getCustodialWallet,
