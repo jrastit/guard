@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:hans/service/h3.dart';
 import 'package:intl/intl.dart';
 import 'package:tekflat_design/tekflat_design.dart';
+import 'package:share_plus/share_plus.dart';
 import 'dart:developer' as developer;
 
 final dateFormat = DateFormat('yyyy-MM-dd hh:mm:ss');
@@ -27,10 +30,11 @@ class _MapSection extends State<MapSection> {
   */
   // default constructor
   MapController mapController = MapController.withUserPosition(
-      trackUserLocation: const UserTrackingOption(
-    enableTracking: true,
-    unFollowUser: false,
-  ));
+    trackUserLocation: const UserTrackingOption(
+      enableTracking: true,
+      unFollowUser: false,
+    )
+  );
 
   GeoPoint? _location;
   DateTime _now = DateTime.now();
@@ -116,6 +120,55 @@ class _MapSection extends State<MapSection> {
     });
   }
 
+  void _openPopUpShare(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        var emailController = TextEditingController();
+        var messageController = TextEditingController();
+        return AlertDialog(
+          alignment: Alignment.center,
+          scrollable: false,
+          title: const Text('Share'),
+          content: SingleChildScrollView(
+            child: Column(
+              //shrinkWrap: true,
+              children: [
+                TextFormField(
+                  controller: emailController,
+                  decoration: const InputDecoration(hintText: 'Social Network 1'),
+                  ),
+                TextFormField(
+                  controller: messageController,
+                  decoration: const InputDecoration(hintText: 'Social Network 2'),
+                  ),
+                ],
+              ),
+            ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Copy Link'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Send them to your email maybe?
+                var email = emailController.text;
+                var message = messageController.text;
+                Navigator.pop(context);
+              },
+              child: Text('Send'),
+            ),
+            TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -123,7 +176,8 @@ class _MapSection extends State<MapSection> {
           text:
               "${dateFormat.format(_now)}\nLongitude : ${_location?.longitude}\nLatitude ${_location?.latitude}"),
       SizedBox(
-        height: TekResponsiveConfig().currentWidth,
+        height: 2*TekResponsiveConfig().currentWidth/3,
+        width: TekResponsiveConfig().currentWidth/2,
         child: OSMFlutter(
             controller: mapController,
             osmOption: OSMOption(
@@ -164,7 +218,17 @@ class _MapSection extends State<MapSection> {
                 ),
               )), */
             )),
-      ),
-    ]);
+        ),
+        //Sharebutton
+        TekVSpace.p18,
+        TekButton(
+          key: const Key('shareButton'),
+          text: 'Share',
+          width: double.infinity,
+          type: TekButtonType.primary,
+          onPressed: _openPopUpShare,
+        ),
+      ]
+    );
   }
 }
