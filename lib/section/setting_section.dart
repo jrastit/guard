@@ -31,9 +31,9 @@ class _SettingSection extends State<SettingSection> {
   Map<String, DateTime?>? _cookies;
 
   void logout() async {
-    var user = await UserAction.logoutExec();
+    await UserAction.logoutExec();
     HttpHandler.clearCookies();
-    widget.setUser(user);
+    widget.setUser(null);
     widget.setAppState(isMobile ? AppState.biometric : AppState.login);
   }
 

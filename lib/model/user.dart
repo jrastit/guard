@@ -24,7 +24,16 @@ class User {
           );
         }
       }
+    } else {
+      return User(
+          id: 0,
+          login: json['login'] ?? '',
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
+      
     }
+
     return switch (json) {
       {
         'user': {

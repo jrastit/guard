@@ -207,26 +207,26 @@ packages:
     dependency: transitive
     description:
       name: flutter_osm_interface
-      sha256: f5ec50f7a5fee9c6c1f3622b1bf9285b451349b2ac30f5dacddd32b4608a2840
+      sha256: b2482a721be0069379a049fad28a63b006005bae00a735f742bd42f54b93830d
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.0-rc"
   flutter_osm_plugin:
     dependency: "direct main"
     description:
       name: flutter_osm_plugin
-      sha256: f214db73318cf55fea29008437dc5952f74d350492ab79dbb42496e89d2ccb6c
+      sha256: af11c49a742ece65fbecac5aadcf185e4a9141e6c58d2e5ae267d01f45c74df9
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.0-rc.1"
   flutter_osm_web:
     dependency: transitive
     description:
       name: flutter_osm_web
-      sha256: "5a08ace94717112a89bc4b7e0f83a9786a4c8d70b9aa0aefa3c74d6c67303449"
+      sha256: "587011654b3fde39e89f61c5b05a2b753a3cabd39df82c9a062d9d909cc77908"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.0-rc.1"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -239,10 +239,50 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_secure_storage
-      sha256: "9f3dd2ac3b6875b0fde5b04734789c3ef35ba3965c18e99dd564a7a2f8056df6"
+      sha256: ffdbb60130e4665d2af814a0267c481bcf522c41ae2e43caf69fa0146876d685
       url: "https://pub.dev"
     source: hosted
-    version: "4.2.1"
+    version: "9.0.0"
+  flutter_secure_storage_linux:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage_linux
+      sha256: "3d5032e314774ee0e1a7d0a9f5e2793486f0dff2dd9ef5a23f4e3fb2a0ae6a9e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
+  flutter_secure_storage_macos:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage_macos
+      sha256: bd33935b4b628abd0b86c8ca20655c5b36275c3a3f5194769a7b3f37c905369c
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.1"
+  flutter_secure_storage_platform_interface:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage_platform_interface
+      sha256: "0d4d3a5dd4db28c96ae414d7ba3b8422fd735a8255642774803b2532c9a61d7e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
+  flutter_secure_storage_web:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage_web
+      sha256: "30f84f102df9dcdaa2241866a958c2ec976902ebdaa8883fbfe525f1f2f3cf20"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.2"
+  flutter_secure_storage_windows:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage_windows
+      sha256: "5809c66f9dd3b4b93b0a6e2e8561539405322ee767ac2f64d084e2ab5429d108"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   flutter_svg:
     dependency: transitive
     description:
@@ -310,7 +350,7 @@ packages:
     source: hosted
     version: "4.0.2"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"
@@ -321,10 +361,10 @@ packages:
     dependency: transitive
     description:
       name: js
-      sha256: c1b2e9b5ea78c45e1a0788d29606ba27dc5f71f019f32ca5140f61ef071838cf
+      sha256: f2c445dce49627136094980615a031419f7f3eb393237e4ecd97ac15dea343f3
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.1"
+    version: "0.6.7"
   json_rpc_2:
     dependency: transitive
     description:
