@@ -23,18 +23,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Hans & ...',
+      title: "HANS'N",
       // This is the theme of your application.
       theme: TekThemes.light,
       home: TekResponsive.appResBuilder(
-          const MyHomePage(title: 'Hans & ...'),
-        ));
+          MyHomePage(title: "HANS'N", logo: AssetImage(getAsset("HANSNOBG.png"))),
+      )
+    );
   }
 }
 
 /* LOGIN PAGE */
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required this.title, required this.logo});
 
   // Home page of your application. It is stateful (defined below).
   // This class is the configuration for the state. It holds the values (in this
@@ -42,6 +43,7 @@ class MyHomePage extends StatefulWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
+  final AssetImage logo;
   final String title;
 
   @override
@@ -140,6 +142,10 @@ class _MyHomePageState extends State<MyHomePage> {
         length: tabsHeader.length,
         child: Scaffold(
           appBar: AppBar(
+            leading: IconButton(
+              icon: Image.asset(getAsset("HANSNNOBG.png")),
+              onPressed: () {},
+            ),
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
             title: Text(widget.title),
             bottom: TabBar(tabs: tabsHeader),
