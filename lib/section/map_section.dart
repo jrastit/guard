@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
+import 'package:hans/service/h3.dart';
 import 'package:intl/intl.dart';
 import 'package:tekflat_design/tekflat_design.dart';
 import 'dart:developer' as developer;
@@ -9,8 +10,9 @@ import 'dart:developer' as developer;
 final dateFormat = DateFormat('yyyy-MM-dd hh:mm:ss');
 
 class MapSection extends StatefulWidget {
-  const MapSection({super.key});
-
+  const MapSection({
+    super.key,
+  });
   @override
   State<StatefulWidget> createState() => _MapSection();
 }
@@ -34,6 +36,8 @@ class _MapSection extends State<MapSection> {
   DateTime _now = DateTime.now();
   Timer? _timer;
 
+  _MapSection();
+
   @override
   void dispose() {
     _timer?.cancel();
@@ -51,24 +55,57 @@ class _MapSection extends State<MapSection> {
         //await mapController.currentLocation();
         location = await mapController.myLocation();
         await mapController.goToLocation(location);
-        await mapController.addMarker(
-          location,
-          markerIcon: const MarkerIcon(
-              icon: Icon(
-            Icons.location_on,
-            color: Colors.green,
-          )),
-        );
+
+
+        // time = Random().nextInt(100);
+        var (BigInt h3Index, GeoPoint center) =
+            H3.getH3Center(location);
+        developer.log("center $center");
+        developer.log("point $location");
+        Color color = Colors.red;
+        Color colorTime = Colors.blue;
+        
+        var boundaryList = h3.h3ToGeoBoundary(h3Index);
+        var i = 0;
+        for (i = 0; i < boundaryList.length; i++) {
+          await mapController.drawCircle(CircleOSM(
+            key: "${i}boundary",
+            centerPoint: GeoPoint(
+                latitude: boundaryList[i].lat, longitude: boundaryList[i].lon),
+            radius: 1,
+            color: Colors.black,
+            strokeWidth: 10,
+          ));
+        }
+
         await mapController.drawCircle(CircleOSM(
-            key: "circle${location.latitude}",
-            centerPoint: location,
-            radius: 10,
-            color: Colors.red,
-            strokeWidth: 10));
-      } catch (e) {
-        developer.log("location error");
+          key: "1circle",
+          centerPoint: location,
+          radius: 3,
+          color: colorTime,
+          strokeWidth: 10,
+        ));
+        await mapController.drawCircle(CircleOSM(
+          key: "circle$h3Index",
+          centerPoint: center,
+          radius: 5,
+          color: color,
+          strokeWidth: 10,
+        ));
+        await mapController.drawCircle(CircleOSM(
+          key: "2circle",
+          centerPoint: center,
+          radius: 1,
+          //borderColor: Colors.black,
+          color: Colors.black,
+          strokeWidth: 10,
+        ));
+
+        developer.log("location found");
+      } catch (e, stacktrace) {
+        developer.log("location error $e");
+        developer.log(e.toString(), stackTrace: stacktrace);
       }
-      developer.log("location found");
       setState(() {
         if (location != null) {
           _location = location;
