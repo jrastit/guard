@@ -187,7 +187,7 @@ class _LoginSection extends State<LoginSection> {
                       textStyle: const TextStyle(
                         color: Color.fromRGBO(255, 255, 255, 0.9),
                       ),
-                      iconPasswordColor: Color.fromRGBO(255, 255, 255, 0.8),
+                      iconPasswordColor: Color.fromRGBO(255, 255, 255, 0.9),
                     ),
                   ),
                 TekVSpace.p18,
