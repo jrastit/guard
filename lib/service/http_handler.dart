@@ -72,7 +72,7 @@ class HttpHandler {
       } else if (response.statusCode == 401) {
         return null;
       } else {
-        logger.e('Error requestion url $proto $url ${response.statusCode}');
+        logger.e('Error requesting url $proto $url ${response.statusCode}, ${response.body}');
         return null;
       }
     } on http.ClientException catch (e, stacktrace) {

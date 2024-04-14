@@ -65,6 +65,10 @@ class _WalletSectionState extends State<WalletSection> {
           child: Column(
             children: <Widget>[
               TekVSpace.mainSpace,
+              TekTypography(
+                text: 'Address : ${widget.address ?? ''}',
+              ),
+              TekVSpace.mainSpace,
               FormItemTitleWidget(
                 title: 'Address',
                 isRequired: true,

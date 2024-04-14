@@ -5,8 +5,7 @@ class NFT {
   final String imageURI;
   final String position;
   final String contract;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+
   
   NFT({
     required this.id,
@@ -15,8 +14,6 @@ class NFT {
     required this.imageURI,
     required this.position,
     required this.contract,
-    required this.createdAt,
-    required this.updatedAt,
   });
     
   factory NFT.fromJson(Map<String, dynamic> json) {
@@ -24,16 +21,14 @@ class NFT {
 
     return switch (json) {
       {
-        'contract': {
+        
           'id': String id,
           'name': String name,
           'description': String description,
           'imageURI': String imageURI,
           'position': String position,
           'contract': String contract,
-          'createdAt': String createdAt,
-          'updatedAt': String updatedAt,
-        }
+        
       } =>
         NFT(
           id: int.parse(id),
@@ -42,8 +37,6 @@ class NFT {
           imageURI: imageURI,
           position: position,
           contract: contract,
-          createdAt: DateTime.parse(createdAt),
-          updatedAt: DateTime.parse(updatedAt),
         ),
       _ => throw FormatException('Failed to load nft. $json'),
     };

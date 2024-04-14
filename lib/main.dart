@@ -54,6 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
   User? _user;
   List<WalletMeta>? _wallets;
   String? _address;
+  final String _contract = '0xbe3B495EFdb9bc19317f7Df4Bce57Ca34A7E92B9';
   AppState appState = isMobile ? AppState.biometric : AppState.retrieveSession;
 
   void setUser(User? user) {
@@ -109,7 +110,13 @@ class _MyHomePageState extends State<MyHomePage> {
             setWallets: setWallets,
             setAppState: setAppState);
       }
-
+      if (_address != null && _address!.isNotEmpty){
+        tabsHeader.add(const Tab(
+        icon: Icon(Icons.map),
+      ));
+        tabsContent.add(MapSection(address: _address ?? '', contract: _contract, user: _user!));
+      }
+      
       if (appState == AppState.wallet) {
         tabsHeader.add(const Tab(
           icon: Icon(Icons.account_balance_wallet),
@@ -131,10 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
         setWallets: setWallets,
         setAppState: setAppState,
       ));
-      tabsHeader.add(const Tab(
-        icon: Icon(Icons.map),
-      ));
-      tabsContent.add(const MapSection());
+      
     }
 
     return DefaultTabController(
