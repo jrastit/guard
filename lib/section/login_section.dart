@@ -119,10 +119,11 @@ class _LoginSection extends State<LoginSection> {
             child: Column(
               children: <Widget>[
                 TekVSpace.mainSpace,
-                const Align(alignment: Alignment.topRight, child: ServerStatus()),
+                const Align(alignment: Alignment.topRight),// child: ServerStatus()),
                 TekVSpace.mainSpace,
                 TekVSpace.p32,
                 TekVSpace.p32,
+                TekAssetImage(path: getAsset("HANS.png"), ),
                 TekTypography(
                     text: _isLogin ? "Login form" : "Register from",
                     type: TekTypographyType.titleLarge,
