@@ -46,7 +46,7 @@ class ContractAction {
     }
     List<NFT> nfts = [];
     logger.d(ret);
-    for (var n in ret['nfts']) {
+    for (var n in ret['nft_list']) {
       nfts.add(NFT.fromJson(n));
     }
     return nfts;

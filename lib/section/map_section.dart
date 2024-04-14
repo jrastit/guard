@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
-import 'package:h3_flutter/ffi_extension.dart';
 import 'package:hans/action/contract_action.dart';
 import 'package:hans/model/nft.dart';
 import 'package:hans/model/user.dart';
@@ -51,7 +50,7 @@ class _MapSection extends State<MapSection> {
   DateTime _now = DateTime.now();
   Timer? _timer;
   bool loading = false;
-  List<NFT> nfts = [];
+  List<NFT> _nfts = [];
 
   _MapSection();
 
@@ -62,7 +61,7 @@ class _MapSection extends State<MapSection> {
     List<NFT> nfts = await ContractAction.loadNFTs(widget.address, _location?.latitude, _location?.longitude, 5, widget.contract);
     logger.d(nfts);
     setState(() {
-      this.nfts = nfts;
+      _nfts = nfts;
     });
   }
 
@@ -91,16 +90,8 @@ class _MapSection extends State<MapSection> {
     super.dispose();
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 5), (Timer t) async {
-      //GeoPoint? location = mapController.initPosition;
-      developer.log("Looking for location");
-      GeoPoint? location;
-      try {
-        //await mapController.currentLocation();
-        location = await mapController.myLocation();
+  _redraw(location) async {
+    try {
         loadNFTs();
         await mapController.goToLocation(location);
 
@@ -124,41 +115,77 @@ class _MapSection extends State<MapSection> {
             color: Colors.black,
             strokeWidth: 10,
           ));
-        }
 
-        await mapController.drawCircle(CircleOSM(
-          key: "1circle",
-          centerPoint: location,
-          radius: 3,
-          color: colorTime,
-          strokeWidth: 10,
-        ));
-        await mapController.drawCircle(CircleOSM(
-          key: "circle$h3Index",
-          centerPoint: center,
-          radius: 5,
-          color: color,
-          strokeWidth: 10,
-        ));
-        await mapController.drawCircle(CircleOSM(
-          key: "2circle",
-          centerPoint: center,
-          radius: 1,
-          //borderColor: Colors.black,
-          color: Colors.black,
-          strokeWidth: 10,
-        ));
+        }
+        logger.d("draw nfts $_nfts");
+        for (var nft in _nfts) {
+          logger.d("draw nft $nft");
+          logger.d("draw nft position ${nft.position}");
+          logger.d("draw nft position ${nft.position.split(',')[0].substring(1)}");
+          logger.d("draw nft position ${nft.position.split(',')[1].substring(0, nft.position.split(',')[1].length - 1)}");
+          double latitude = double.parse(nft.position.split(',')[0].substring(1));
+          double longitude = double.parse(nft.position.split(',')[1].substring(0, nft.position.split(',')[1].length - 1));
+          logger.d("draw nft $latitude $longitude");
+          GeoPoint geopoint = GeoPoint(
+            latitude: latitude,
+            longitude: longitude,
+          );
+          await mapController.drawCircle(CircleOSM(
+            key: "nft${nft.id}",
+            centerPoint: geopoint,
+            radius: 5,
+            color: Colors.green,
+            strokeWidth: 10,
+          ));
+        }
+        // await mapController.drawCircle(CircleOSM(
+        //   key: "1circle",
+        //   centerPoint: location,
+        //   radius: 3,
+        //   color: colorTime,
+        //   strokeWidth: 10,
+        // ));
+        // await mapController.drawCircle(CircleOSM(
+        //   key: "circle$h3Index",
+        //   centerPoint: center,
+        //   radius: 5,
+        //   color: color,
+        //   strokeWidth: 10,
+        // ));
+        // await mapController.drawCircle(CircleOSM(
+        //   key: "2circle",
+        //   centerPoint: center,
+        //   radius: 1,
+        //   //borderColor: Colors.black,
+        //   color: Colors.black,
+        //   strokeWidth: 10,
+        // ));
 
         developer.log("location found");
       } catch (e, stacktrace) {
         developer.log("location error $e");
         developer.log(e.toString(), stackTrace: stacktrace);
       }
-      setState(() {
-        if (location != null) {
-          _location = location;
-        }
+  }
 
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 5), (Timer t) async {
+      //GeoPoint? location = mapController.initPosition;
+      developer.log("Looking for location");
+      GeoPoint? location;
+      //await mapController.currentLocation();
+      try {
+        location = await mapController.myLocation();
+        await _redraw(location);
+      } catch (e) {
+        developer.log("location error $e");
+      }
+        
+      
+      setState(() {
+        _location = location;
         _now = DateTime.now();
       });
     });
