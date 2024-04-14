@@ -49,7 +49,7 @@ class _MapSection extends State<MapSection> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 1), (Timer t) async {
+    _timer = Timer.periodic(const Duration(seconds: 5), (Timer t) async {
       //GeoPoint? location = mapController.initPosition;
       developer.log("Looking for location");
       GeoPoint? location;
@@ -175,8 +175,8 @@ class _MapSection extends State<MapSection> {
           text:
               "${dateFormat.format(_now)}\nLongitude : ${_location?.longitude}\nLatitude ${_location?.latitude}"),
       SizedBox(
-        height: 2*TekResponsiveConfig().currentWidth/3,
-        width: TekResponsiveConfig().currentWidth/2,
+        height: TekResponsiveConfig().currentWidth,
+        width: TekResponsiveConfig().currentWidth,
         child: OSMFlutter(
             controller: mapController,
             osmOption: OSMOption(
