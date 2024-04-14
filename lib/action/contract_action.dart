@@ -38,32 +38,42 @@ class ContractAction {
   }
 
   static Future<List<NFT>> loadNFTs(address, latitud, longitud, level, contractId) async {
-    var ret = await HttpHandler.postAuth("${getBaseUrl()}/h3/nft/list");
+    var ret = await HttpHandler.postAuth("${getBaseUrl()}/h3/h3",
+        {'address': address, 'latitud': latitud, 'longitud': longitud, 'level': level, 'contract': contractId}
+    );
     if (ret == null) {
       return [];
     }
     List<NFT> nfts = [];
+    logger.d(ret);
     for (var n in ret['nfts']) {
       nfts.add(NFT.fromJson(n));
     }
     return nfts;
   }
 
-  static Future<NFT?> createNFTExec(String address, String name, String description, String imageURI, longitud, latitud, String contract) async {
-    var ret = await HttpHandler.postAuth("${getBaseUrl()}/h3/nft", {
-      'name': name,
-      'description': description,
-      'imageURI': imageURI,
-      'longitud': longitud,
-      'latitud': latitud,
-      'contract': contract,
-      'level_min': 1,
-      'level_max': 8,
-    });
-    if (ret == null) {
-      return null;
+  static Future<void> createNFTExec(String address, String name, String description, String imageURI, latitud, longitud, String contract) async {
+    try {
+      var ret = await HttpHandler.postAuth("${getBaseUrl()}/h3/nft", {
+        'name': name,
+        'description': description,
+        'imageURI': imageURI,
+        'longitud': longitud,
+        'latitud': latitud,
+        'contract': contract,
+        'level_min': 1,
+        'level_max': 8,
+      });
+      if (ret == null) {
+        logger.e("error null");
+        return;
+      }
+      return;
+    } catch (e) {
+      logger.e("error $e");
+      throw Exception("$e");
+
     }
-    return NFT.fromJson(ret['nft']);
   }
 }
 

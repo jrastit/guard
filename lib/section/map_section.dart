@@ -2,8 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
+import 'package:h3_flutter/ffi_extension.dart';
+import 'package:hans/action/contract_action.dart';
+import 'package:hans/model/nft.dart';
+import 'package:hans/model/user.dart';
 import 'package:hans/service/h3.dart';
 import 'package:hans/service/state_service.dart';
+import 'package:hans/widget/loading_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:tekflat_design/tekflat_design.dart';
 
@@ -12,14 +17,21 @@ import 'dart:developer' as developer;
 final dateFormat = DateFormat('yyyy-MM-dd hh:mm:ss');
 
 class MapSection extends StatefulWidget {
+  final String address;
+  final String contract;
+  final User user;
   const MapSection({
     super.key,
+    required this.address,
+    required this.contract,
+    required this.user,
   });
   @override
   State<StatefulWidget> createState() => _MapSection();
 }
 
 class _MapSection extends State<MapSection> {
+
   /*
   MapController mapController = MapController.withUserPosition(
       trackUserLocation: const UserTrackingOption(
@@ -38,8 +50,40 @@ class _MapSection extends State<MapSection> {
   GeoPoint? _location;
   DateTime _now = DateTime.now();
   Timer? _timer;
+  bool loading = false;
+  List<NFT> nfts = [];
 
   _MapSection();
+
+  loadNFTs() async {
+    if (_location == null || _location?.latitude == 0 || _location?.longitude == 0) {
+      return;
+    }
+    List<NFT> nfts = await ContractAction.loadNFTs(widget.address, _location?.latitude, _location?.longitude, 5, widget.contract);
+    logger.d(nfts);
+    setState(() {
+      this.nfts = nfts;
+    });
+  }
+
+  publishLocation() async {
+    GeoPoint? location = await mapController.myLocation();
+    if (_location == null || _location?.latitude == 0 || _location?.longitude == 0) {
+      return;
+    }
+    await ContractAction.createNFTExec(
+      widget.address, 
+      widget.user.login, 
+      "${widget.user.login} was here at ${dateFormat.format(DateTime.now())}", 
+      "https://greitje.fexhu.com", 
+      _location?.latitude, 
+      _location?.longitude, 
+      widget.contract
+      );
+    setState(() {
+      loading = false;
+    });
+  }
 
   @override
   void dispose() {
@@ -57,6 +101,7 @@ class _MapSection extends State<MapSection> {
       try {
         //await mapController.currentLocation();
         location = await mapController.myLocation();
+        loadNFTs();
         await mapController.goToLocation(location);
 
 
@@ -152,9 +197,10 @@ class _MapSection extends State<MapSection> {
             ),
             TextButton(
               onPressed: () {
-                // Send them to your email maybe?
-                //var email = emailController.text;
-                //var message = messageController.text;
+                setState(() {
+                  loading = false;
+                });
+                publishLocation();
                 Navigator.pop(context);
               },
               child: const Text('Send'),
@@ -221,6 +267,9 @@ class _MapSection extends State<MapSection> {
 
   @override
   Widget build(BuildContext context) {
+    if (loading) {
+      return const LoadingWidget(title: 'Minting NFT...');
+    }
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       TekTypography(
           text:
