@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:hans/service/h3.dart';
+import 'package:hans/service/state_service.dart';
 import 'package:intl/intl.dart';
 import 'package:tekflat_design/tekflat_design.dart';
 
@@ -118,13 +119,11 @@ class _MapSection extends State<MapSection> {
     });
   }
 
-  void _openPopUpShare(){
+  void _openPopUpShareLoc(){
     showDialog(
       barrierDismissible: true,
       context: context,
       builder: (BuildContext context) {
-        var emailController = TextEditingController();
-        var messageController = TextEditingController();
         return AlertDialog(
           alignment: Alignment.center,
           scrollable: false,
@@ -133,13 +132,15 @@ class _MapSection extends State<MapSection> {
             child: Column(
               //shrinkWrap: true,
               children: [
-                TextFormField(
-                  controller: emailController,
-                  decoration: const InputDecoration(hintText: 'Social Network 1'),
-                  ),
-                TextFormField(
-                  controller: messageController,
-                  decoration: const InputDecoration(hintText: 'Social Network 2'),
+                Container(
+                  width: 300,
+                  height: 400,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: ExactAssetImage(getAsset("HANS.png")),
+                      fit: BoxFit.cover
+                      ),
+                    )
                   ),
                 ],
               ),
@@ -152,11 +153,61 @@ class _MapSection extends State<MapSection> {
             TextButton(
               onPressed: () {
                 // Send them to your email maybe?
-                var email = emailController.text;
-                var message = messageController.text;
+                //var email = emailController.text;
+                //var message = messageController.text;
                 Navigator.pop(context);
               },
-              child: Text('Send'),
+              child: const Text('Send'),
+            ),
+            TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _openPopUpSharePic(){
+    showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          alignment: Alignment.center,
+          scrollable: false,
+          title: const Text('Share'),
+          content: SingleChildScrollView(
+            child: Column(
+              //shrinkWrap: true,
+              children: [
+                Container(
+                  width: 300,
+                  height: 400,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: ExactAssetImage(getAsset("HANS.png")),
+                      fit: BoxFit.cover
+                      ),
+                    )
+                  ),
+                ],
+              ),
+            ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Copy Link'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Send them to your email maybe?
+                //var email = emailController.text;
+                //var message = messageController.text;
+                Navigator.pop(context);
+              },
+              child: const Text('Send'),
             ),
             TextButton(
                 onPressed: () => Navigator.pop(context),
@@ -220,12 +271,19 @@ class _MapSection extends State<MapSection> {
         ),
         //Sharebutton
         TekVSpace.p18,
-        TekButton(
-          key: const Key('shareButton'),
-          text: 'Share',
-          width: double.infinity,
+        TekButton( //Share Location of map screenshot
+          key: const Key('shareLocButton'),
+          text: 'Share Location',
+          width: TekResponsiveConfig().currentWidth/2,
           type: TekButtonType.primary,
-          onPressed: _openPopUpShare,
+          onPressed: _openPopUpShareLoc,
+        ),
+        TekButton( //Share mobile picture/camera picture
+          key: const Key('sharePicButton'),
+          text: 'Share Picture',
+          width: TekResponsiveConfig().currentWidth/2,
+          type: TekButtonType.primary,
+          onPressed: _openPopUpSharePic,
         ),
       ]
     );

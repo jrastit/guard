@@ -50,6 +50,7 @@ dependencies:
   hex: ^0.2.0
   intl: ^0.18.1
   h3_flutter: ^0.6.6
+  camera: ^0.10.5+9
 
 dev_dependencies:
   flutter_test:
