@@ -8,6 +8,7 @@ enum AppState {
   wallet,
   map,
   camer,
+  preview,
 }
 
 final bool isMobile = defaultTargetPlatform == TargetPlatform.android ||

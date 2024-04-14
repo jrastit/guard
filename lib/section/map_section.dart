@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:hans/service/h3.dart';
 import 'package:hans/service/state_service.dart';
+import 'package:camera/camera.dart';
 import 'package:intl/intl.dart';
 import 'package:tekflat_design/tekflat_design.dart';
 
@@ -12,8 +13,11 @@ import 'dart:developer' as developer;
 final dateFormat = DateFormat('yyyy-MM-dd hh:mm:ss');
 
 class MapSection extends StatefulWidget {
+  final Function(AppState appState) setAppState;
+
   const MapSection({
     super.key,
+    required this.setAppState,
   });
   @override
   State<StatefulWidget> createState() => _MapSection();
@@ -58,7 +62,6 @@ class _MapSection extends State<MapSection> {
         //await mapController.currentLocation();
         location = await mapController.myLocation();
         await mapController.goToLocation(location);
-
 
         // time = Random().nextInt(100);
         var (BigInt h3Index, GeoPoint center) =
@@ -120,56 +123,6 @@ class _MapSection extends State<MapSection> {
   }
 
   void _openPopUpShareLoc(){
-    showDialog(
-      barrierDismissible: true,
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          alignment: Alignment.center,
-          scrollable: false,
-          title: const Text('Share'),
-          content: SingleChildScrollView(
-            child: Column(
-              //shrinkWrap: true,
-              children: [
-                Container(
-                  width: 300,
-                  height: 400,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: ExactAssetImage(getAsset("HANS.png")),
-                      fit: BoxFit.cover
-                      ),
-                    )
-                  ),
-                ],
-              ),
-            ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Copy Link'),
-            ),
-            TextButton(
-              onPressed: () {
-                // Send them to your email maybe?
-                //var email = emailController.text;
-                //var message = messageController.text;
-                Navigator.pop(context);
-              },
-              child: const Text('Send'),
-            ),
-            TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Cancel'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _openPopUpSharePic(){
     showDialog(
       barrierDismissible: true,
       context: context,
@@ -283,7 +236,9 @@ class _MapSection extends State<MapSection> {
           text: 'Share Picture',
           width: TekResponsiveConfig().currentWidth/2,
           type: TekButtonType.primary,
-          onPressed: _openPopUpSharePic,
+          onPressed: () {
+            widget.setAppState(AppState.camer);
+          },
         ),
       ]
     );

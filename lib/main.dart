@@ -9,6 +9,7 @@ import 'package:hans/section/setting_section.dart';
 import 'package:hans/section/wallet_loading_section.dart';
 import 'package:hans/section/wallet_section.dart';
 import 'package:hans/service/state_service.dart';
+import 'package:camera/camera.dart';
 import 'package:tekflat_design/tekflat_design.dart';
 //import 'package:flutter'
 
@@ -131,10 +132,14 @@ class _MyHomePageState extends State<MyHomePage> {
         setWallets: setWallets,
         setAppState: setAppState,
       ));
-      tabsHeader.add(const Tab(
-        icon: Icon(Icons.map),
-      ));
-      tabsContent.add(const MapSection());
+      //if (appState == AppState.map) {
+        tabsHeader.add(const Tab(
+          icon: Icon(Icons.map),
+        ));
+        tabsContent.add(
+          MapSection(setAppState: setAppState,)
+          );
+      //}
     }
 
     return DefaultTabController(
