@@ -226,8 +226,8 @@ class _MapSection extends State<MapSection> {
           text:
               "${dateFormat.format(_now)}\nLongitude : ${_location?.longitude}\nLatitude ${_location?.latitude}"),
       SizedBox(
-        height: TekResponsiveConfig().currentWidth,
-        width: TekResponsiveConfig().currentWidth,
+        height: TekResponsiveConfig().currentWidth/2,
+        width: TekResponsiveConfig().currentWidth/2,
         child: OSMFlutter(
             controller: mapController,
             osmOption: OSMOption(
