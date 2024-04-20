@@ -68,7 +68,7 @@ class _MapSection extends State<MapSection> {
         widget.address,
         widget.user.login,
         "${widget.user.login} was here at ${dateFormat.format(DateTime.now())}",
-        "https://greitje.fexhu.com",
+        "https://grietje.fexhu.com/images/HANS.png",
         _location?.latitude,
         _location?.longitude,
         widget.contract);
