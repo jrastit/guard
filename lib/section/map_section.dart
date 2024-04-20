@@ -1,17 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
+import 'package:geopoint3/geopoint3.dart';
 import 'package:hans/action/contract_action.dart';
 import 'package:hans/model/nft.dart';
 import 'package:hans/model/user.dart';
-import 'package:hans/service/h3.dart';
-import 'package:hans/service/state_service.dart';
+import 'package:hans/popup/share_popup.dart';
 import 'package:hans/widget/loading_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:tekflat_design/tekflat_design.dart';
-
-import 'dart:developer' as developer;
+import 'package:geolocator/geolocator.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_tile_provider.dart';
+import 'package:latlong2/latlong.dart';
 
 final dateFormat = DateFormat('yyyy-MM-dd hh:mm:ss');
 
@@ -30,55 +31,47 @@ class MapSection extends StatefulWidget {
 }
 
 class _MapSection extends State<MapSection> {
-
-  /*
-  MapController mapController = MapController.withUserPosition(
-      trackUserLocation: const UserTrackingOption(
-    enableTracking: true,
-    unFollowUser: false,
-  ));
-  */
-  // default constructor
-  MapController mapController = MapController.withUserPosition(
-    trackUserLocation: const UserTrackingOption(
-      enableTracking: true,
-      unFollowUser: false,
-    )
-  );
-
-  GeoPoint? _location;
+  GeoPoint? _location = GeoPoint(latitude: 48.866667, longitude: 2.333333);
   DateTime _now = DateTime.now();
   Timer? _timer;
   bool loading = false;
+
+  late MapController mapController;
+
   List<NFT> _nfts = [];
 
-  _MapSection();
+  // default constructor
 
   loadNFTs() async {
-    if (_location == null || _location?.latitude == 0 || _location?.longitude == 0) {
+    if (_location == null ||
+        _location?.latitude == 0 ||
+        _location?.longitude == 0) {
       return;
     }
-    List<NFT> nfts = await ContractAction.loadNFTs(widget.address, _location?.latitude, _location?.longitude, 5, widget.contract);
+    List<NFT> nfts = await ContractAction.loadNFTs(widget.address,
+        _location?.latitude, _location?.longitude, 5, widget.contract);
     logger.d(nfts);
     setState(() {
       _nfts = nfts;
     });
   }
 
+  _MapSection();
+
   publishLocation() async {
-    GeoPoint? location = await mapController.myLocation();
-    if (_location == null || _location?.latitude == 0 || _location?.longitude == 0) {
+    if (_location == null ||
+        _location?.latitude == 0 ||
+        _location?.longitude == 0) {
       return;
     }
     await ContractAction.createNFTExec(
-      widget.address, 
-      widget.user.login, 
-      "${widget.user.login} was here at ${dateFormat.format(DateTime.now())}", 
-      "https://greitje.fexhu.com", 
-      _location?.latitude, 
-      _location?.longitude, 
-      widget.contract
-      );
+        widget.address,
+        widget.user.login,
+        "${widget.user.login} was here at ${dateFormat.format(DateTime.now())}",
+        "https://greitje.fexhu.com",
+        _location?.latitude,
+        _location?.longitude,
+        widget.contract);
     setState(() {
       loading = false;
     });
@@ -90,206 +83,96 @@ class _MapSection extends State<MapSection> {
     super.dispose();
   }
 
-  _redraw(location) async {
-    try {
-        loadNFTs();
-        await mapController.goToLocation(location);
-
-
-        // time = Random().nextInt(100);
-        var (BigInt h3Index, GeoPoint center) =
-            H3.getH3Center(location);
-        developer.log("center $center");
-        developer.log("point $location");
-        Color color = Colors.red;
-        Color colorTime = Colors.blue;
-        
-        var boundaryList = h3.h3ToGeoBoundary(h3Index);
-        var i = 0;
-        for (i = 0; i < boundaryList.length; i++) {
-          await mapController.drawCircle(CircleOSM(
-            key: "${i}boundary",
-            centerPoint: GeoPoint(
-                latitude: boundaryList[i].lat, longitude: boundaryList[i].lon),
-            radius: 1,
-            color: Colors.black,
-            strokeWidth: 10,
-          ));
-
-        }
-        logger.d("draw nfts $_nfts");
-        for (var nft in _nfts) {
-          logger.d("draw nft $nft");
-          logger.d("draw nft position ${nft.position}");
-          logger.d("draw nft position ${nft.position.split(',')[0].substring(1)}");
-          logger.d("draw nft position ${nft.position.split(',')[1].substring(0, nft.position.split(',')[1].length - 1)}");
-          double latitude = double.parse(nft.position.split(',')[0].substring(1));
-          double longitude = double.parse(nft.position.split(',')[1].substring(0, nft.position.split(',')[1].length - 1));
-          logger.d("draw nft $latitude $longitude");
-          GeoPoint geopoint = GeoPoint(
-            latitude: latitude,
-            longitude: longitude,
-          );
-          await mapController.drawCircle(CircleOSM(
-            key: "nft${nft.id}",
-            centerPoint: geopoint,
-            radius: 5,
-            color: Colors.green,
-            strokeWidth: 10,
-          ));
-        }
-        // await mapController.drawCircle(CircleOSM(
-        //   key: "1circle",
-        //   centerPoint: location,
-        //   radius: 3,
-        //   color: colorTime,
-        //   strokeWidth: 10,
-        // ));
-        // await mapController.drawCircle(CircleOSM(
-        //   key: "circle$h3Index",
-        //   centerPoint: center,
-        //   radius: 5,
-        //   color: color,
-        //   strokeWidth: 10,
-        // ));
-        // await mapController.drawCircle(CircleOSM(
-        //   key: "2circle",
-        //   centerPoint: center,
-        //   radius: 1,
-        //   //borderColor: Colors.black,
-        //   color: Colors.black,
-        //   strokeWidth: 10,
-        // ));
-
-        developer.log("location found");
-      } catch (e, stacktrace) {
-        developer.log("location error $e");
-        developer.log(e.toString(), stackTrace: stacktrace);
+  Future<GeoPoint?> getCurrentLocation() async {
+    logger.d("Getting location");
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    logger.d("location service enabled: $serviceEnabled");
+    if (!serviceEnabled) {
+      logger.d("Service is not enabled");
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Location Service Disabled'),
+          content: const Text('Please enable location services.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+      return null;
+    }
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      logger.d("Permission is denied");
+      permission = await Geolocator.requestPermission();
+      if (permission != LocationPermission.whileInUse &&
+          permission != LocationPermission.always) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Location Permission Denied'),
+            content: const Text('Please grant location permission.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+        return null;
       }
+    }
+
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+    mapController.move(
+      LatLng(position.latitude, position.longitude),
+      15.0,
+    );
+    return GeoPoint(
+      latitude: position.latitude,
+      longitude: position.longitude,
+    );
+  }
+
+  Future _updateLocation() async {
+    var location = await getCurrentLocation();
+    setState(() {
+      _location = location;
+      _now = DateTime.now();
+    });
+    await loadNFTs();
+  }
+
+  OverlayImage nftToOverlay (NFT nft) {
+    double latitude = double.parse(nft.position.split(',')[0].substring(1));
+    double longitude = double.parse(nft.position.split(',')[1].substring(0, nft.position.split(',')[1].length - 1));
+    return OverlayImage(
+      bounds: LatLngBounds(
+        LatLng(latitude - 0.0001, longitude - 0.0001),
+        LatLng(latitude + 0.0001, longitude + 0.0001),
+      ),
+      imageProvider: NetworkImage(nft.imageURI),
+    );
+  }
+
+  List<OverlayImage> getNFTMarkers() {
+    return _nfts.map((nft) => nftToOverlay(nft)).toList();
   }
 
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 5), (Timer t) async {
-      //GeoPoint? location = mapController.initPosition;
-      developer.log("Looking for location");
-      GeoPoint? location;
-      //await mapController.currentLocation();
-      try {
-        location = await mapController.myLocation();
-        await _redraw(location);
-      } catch (e) {
-        developer.log("location error $e");
-      }
-        
-      
-      setState(() {
-        _location = location;
-        _now = DateTime.now();
-      });
+    mapController = MapController();
+    _updateLocation();
+    _timer = Timer.periodic(const Duration(seconds: 10), (Timer t) async {
+      await _updateLocation();
     });
-  }
-
-  void _openPopUpShareLoc(){
-    showDialog(
-      barrierDismissible: true,
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          alignment: Alignment.center,
-          scrollable: false,
-          title: const Text('Share'),
-          content: SingleChildScrollView(
-            child: Column(
-              //shrinkWrap: true,
-              children: [
-                Container(
-                  width: 300,
-                  height: 400,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: ExactAssetImage(getAsset("HANS.png")),
-                      fit: BoxFit.cover
-                      ),
-                    )
-                  ),
-                ],
-              ),
-            ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Copy Link'),
-            ),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  loading = false;
-                });
-                publishLocation();
-                Navigator.pop(context);
-              },
-              child: const Text('Send'),
-            ),
-            TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Cancel'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _openPopUpSharePic(){
-    showDialog(
-      barrierDismissible: true,
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          alignment: Alignment.center,
-          scrollable: false,
-          title: const Text('Share'),
-          content: SingleChildScrollView(
-            child: Column(
-              //shrinkWrap: true,
-              children: [
-                Container(
-                  width: 300,
-                  height: 400,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: ExactAssetImage(getAsset("HANS.png")),
-                      fit: BoxFit.cover
-                      ),
-                    )
-                  ),
-                ],
-              ),
-            ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Copy Link'),
-            ),
-            TextButton(
-              onPressed: () {
-                // Send them to your email maybe?
-                //var email = emailController.text;
-                //var message = messageController.text;
-                Navigator.pop(context);
-              },
-              child: const Text('Send'),
-            ),
-            TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Cancel'),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   @override
@@ -302,66 +185,57 @@ class _MapSection extends State<MapSection> {
           text:
               "${dateFormat.format(_now)}\nLongitude : ${_location?.longitude}\nLatitude ${_location?.latitude}"),
       SizedBox(
-        height: TekResponsiveConfig().currentWidth,
-        width: TekResponsiveConfig().currentWidth,
-        child: OSMFlutter(
-            controller: mapController,
-            osmOption: OSMOption(
-              userTrackingOption: const UserTrackingOption(
-                enableTracking: true,
-                unFollowUser: false,
-              ),
-              zoomOption: const ZoomOption(
-                initZoom: 18,
-                minZoomLevel: 3,
-                maxZoomLevel: 19,
-                stepZoom: 1.0,
-              ),
-              userLocationMarker: UserLocationMaker(
-                personMarker: const MarkerIcon(
-                  icon: Icon(
-                    Icons.location_history_rounded,
-                    color: Colors.red,
-                    size: 48,
-                  ),
+          height: TekResponsiveConfig().currentWidth,
+          width: TekResponsiveConfig().currentWidth,
+          child: FlutterMap(
+              mapController: mapController,
+              options: MapOptions(
+                initialCenter: LatLng(
+                  _location?.latitude ?? 0.0,
+                  _location?.longitude ?? 0.0,
                 ),
-                directionArrowMarker: const MarkerIcon(
-                  icon: Icon(
-                    Icons.double_arrow,
-                    size: 48,
-                  ),
-                ),
+                initialZoom: 15.0,
               ),
-              roadConfiguration: const RoadOption(
-                roadColor: Colors.yellowAccent,
-              ),
-              /* markerOption: MarkerOption(
-                  defaultMarker: const MarkerIcon(
-                icon: Icon(
-                  Icons.person_pin_circle,
-                  color: Colors.blue,
-                  size: 56,
+              children: [
+                TileLayer(
+                  tileProvider: CancellableNetworkTileProvider(),
+                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                 ),
-              )), */
-            )),
-        ),
-        //Sharebutton
-        TekVSpace.p18,
-        TekButton( //Share Location of map screenshot
-          key: const Key('shareLocButton'),
-          text: 'Share Location',
-          width: TekResponsiveConfig().currentWidth/2,
-          type: TekButtonType.primary,
-          onPressed: _openPopUpShareLoc,
-        ),
-        TekButton( //Share mobile picture/camera picture
-          key: const Key('sharePicButton'),
-          text: 'Share Picture',
-          width: TekResponsiveConfig().currentWidth/2,
-          type: TekButtonType.primary,
-          onPressed: _openPopUpSharePic,
-        ),
-      ]
-    );
+                MarkerLayer(
+                  markers: [
+                    if (_location != null)
+                      Marker(
+                        point: LatLng(
+                          _location!.latitude ?? 0.0,
+                          _location!.longitude ?? 0.0,
+                        ),
+                        child: const Icon(Icons.location_on),
+                      ),
+                  ],
+                ),
+                OverlayImageLayer(
+                  overlayImages: getNFTMarkers(),
+                ),
+              ])),
+      //Sharebutton
+      TekVSpace.p18,
+      TekButton(
+        //Share Location of map screenshot
+        key: const Key('shareLocButton'),
+        text: 'Share Location',
+        width: TekResponsiveConfig().currentWidth / 2,
+        type: TekButtonType.primary,
+        onPressed: () => openPopUpShareLoc(context, publishLocation),
+      ),
+      TekVSpace.p18,
+      TekButton(
+        //Share mobile picture/camera picture
+        key: const Key('sharePicButton'),
+        text: 'Share Picture',
+        width: TekResponsiveConfig().currentWidth / 2,
+        type: TekButtonType.primary,
+        onPressed: () => openPopUpSharePic(context),
+      ),
+    ]);
   }
 }

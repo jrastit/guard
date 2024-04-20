@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hans/model/user.dart';
 import 'package:hans/model/wallet.dart';
+import 'package:hans/section/location_section.dart';
 import 'package:hans/section/login_section.dart';
 import 'package:hans/section/map_section.dart';
 import 'package:hans/section/mobile_auth_section.dart';
@@ -87,6 +88,13 @@ class _MyHomePageState extends State<MyHomePage> {
     List<Widget> tabsHeader = [];
     List<Widget> tabsContent = [];
 
+    /*
+    tabsHeader.add(const Tab(
+        icon: Icon(Icons.location_on),
+      ));
+      tabsContent.add(const LocationSection());
+    */
+    
     if (appState == AppState.biometric) {
       tabsHeader.add(const Tab(
         icon: Icon(Icons.smartphone),
@@ -110,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
             setWallets: setWallets,
             setAppState: setAppState);
       }
-      if (_address != null && _address!.isNotEmpty){
+      if (_address != null){
         tabsHeader.add(const Tab(
         icon: Icon(Icons.map),
       ));

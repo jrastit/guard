@@ -43,7 +43,7 @@ class HttpHandler {
                 headers: headers,
                 body: jsonEncode(body ?? {'empty': true}),
               )
-              .timeout(const Duration(seconds: 5));
+              .timeout(const Duration(seconds: 10));
         case 'put':
           response = await client
               .put(
@@ -51,7 +51,7 @@ class HttpHandler {
                 headers: headers,
                 body: jsonEncode(body ?? {}),
               )
-              .timeout(const Duration(seconds: 5));
+              .timeout(const Duration(seconds: 10));
         case 'delete':
           response = await client
               .delete(
@@ -59,7 +59,7 @@ class HttpHandler {
                 headers: headers,
                 body: jsonEncode(body ?? {}),
               )
-              .timeout(const Duration(seconds: 5));
+              .timeout(const Duration(seconds: 10));
         default:
           return null;
       }
