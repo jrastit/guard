@@ -185,6 +185,7 @@ class _MapSection extends State<MapSection> {
           text:
               "${dateFormat.format(_now)}\nLongitude : ${_location?.longitude}\nLatitude ${_location?.latitude}"),
       SizedBox(
+
           height: TekResponsiveConfig().currentWidth,
           width: TekResponsiveConfig().currentWidth,
           child: FlutterMap(
